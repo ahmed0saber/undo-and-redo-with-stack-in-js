@@ -1,7 +1,12 @@
 class UndoRedoStack {
-    constructor() {
+    constructor({
+        textInput,
+        textarea
+    }) {
         this.undoStack = []
         this.redoStack = []
+        this.textInput = textInput
+        this.textarea = textarea
     }
 
     getState() {
@@ -39,11 +44,7 @@ class UndoRedoStack {
 
     displayCurrentState() {
         const currentState = this.getState()
-        const textInput = document.querySelector(".text-input")
-        const textarea = document.querySelector(".textarea")
-        textInput.value = currentState.subject
-        textarea.value = currentState.message
+        this.textInput.value = currentState.subject
+        this.textarea.value = currentState.message
     }
 }
-
-const stateHandler = new UndoRedoStack()
