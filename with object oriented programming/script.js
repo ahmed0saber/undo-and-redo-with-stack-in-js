@@ -4,10 +4,13 @@ const undoBtn = document.querySelector(".undo-btn")
 const doBtn = document.querySelector(".do-btn")
 const redoBtn = document.querySelector(".redo-btn")
 
-const stateHandler = new UndoRedoStack({
-    textInput,
-    textarea
-})
+const stateHandler = new UndoRedoStack()
+
+const displayCurrentState = () => {
+    const currentState = stateHandler.getState()
+    textInput.value = currentState.subject
+    textarea.value = currentState.message
+}
 
 doBtn.addEventListener("click", () => {
     stateHandler.do({
@@ -17,9 +20,21 @@ doBtn.addEventListener("click", () => {
 })
 
 undoBtn.addEventListener("click", () => {
-    stateHandler.undo()
+    if (stateHandler.canUndo()) {
+        stateHandler.undo()
+        displayCurrentState()
+        return
+    }
+
+    alert("nothing to undo")
 })
 
 redoBtn.addEventListener("click", () => {
-    stateHandler.redo()
+    if (stateHandler.canRedo()) {
+        stateHandler.redo()
+        displayCurrentState()
+        return
+    }
+
+    alert("nothing to redo")
 })

@@ -1,12 +1,7 @@
 class UndoRedoStack {
-    constructor({
-        textInput,
-        textarea
-    }) {
+    constructor() {
         this.undoStack = []
         this.redoStack = []
-        this.textInput = textInput
-        this.textarea = textarea
     }
 
     getState() {
@@ -19,32 +14,20 @@ class UndoRedoStack {
     }
 
     undo() {
-        if (this.undoStack.length <= 1) {
-            alert("nothing to undo")
-            return
-        }
-
         const lastState = this.undoStack.pop()
         this.redoStack.push(lastState)
-
-        this.displayCurrentState()
     }
 
     redo() {
-        if (this.redoStack.length <= 0) {
-            alert("nothing to redo")
-            return
-        }
-
         const nextState = this.redoStack.pop()
         this.undoStack.push(nextState)
-
-        this.displayCurrentState()
     }
 
-    displayCurrentState() {
-        const currentState = this.getState()
-        this.textInput.value = currentState.subject
-        this.textarea.value = currentState.message
+    canUndo() {
+        return this.undoStack.length > 1
+    }
+
+    canRedo() {
+        return this.redoStack.length > 0
     }
 }
