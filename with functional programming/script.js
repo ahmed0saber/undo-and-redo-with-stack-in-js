@@ -11,6 +11,11 @@ const getCurrentState = () => {
 }
 
 const doSomething = (state) => {
+    if (state.subject.trim() === "" || state.message.trim() === "") {
+        alert("nothing to do")
+        return
+    }
+
     undoStack.push(state)
     redoStack.length = 0
 }

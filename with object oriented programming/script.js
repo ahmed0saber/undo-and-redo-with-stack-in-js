@@ -13,6 +13,11 @@ const displayCurrentState = () => {
 }
 
 doBtn.addEventListener("click", () => {
+    if (textInput.value.trim() === "" || textarea.value.trim() === "") {
+        alert("nothing to do")
+        return
+    }
+
     stateHandler.do({
         subject: textInput.value,
         message: textarea.value,
